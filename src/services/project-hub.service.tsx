@@ -22,7 +22,7 @@ export const getProjects = async () => {
 
 export const getProjectById = async (id: number) => {
   try {
-    const endpoint = `${API_URL}/${PROJECTS_ENDPOINT}/${id}`;
+    const endpoint = `${API_URL}${PROJECTS_ENDPOINT}/${id}`;
     const response = await axios.get(endpoint);
 
     let project: ProjectDetail | null = response.data ?? null;
