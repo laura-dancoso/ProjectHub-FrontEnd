@@ -8,7 +8,7 @@ const PROJECTS_ENDPOINT = '/projects';
 
 export const getProjects = async () => {
   try {
-    const endpoint = `${API_URL}/${PROJECTS_ENDPOINT}`;
+    const endpoint = `${API_URL}${PROJECTS_ENDPOINT}`;
     const response = await axios.get(endpoint);
 
     let projects: Project[] = response.data;
