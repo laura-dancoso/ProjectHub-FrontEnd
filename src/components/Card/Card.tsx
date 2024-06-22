@@ -16,11 +16,13 @@ let cardData: Project[] = [];
 const ActionAreaCard = ({
   projectId,
   title,
-  members
+  members,
+  projectImgUrl
 }: {
   projectId: number;
   title: string;
   members: string[];
+  projectImgUrl: string;
 }) => {
   const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ const ActionAreaCard = ({
       onClick={handleGoToProjectDetail}
     >
       <CardActionArea>
-        <CardMedia component="img" height="200" alt={title} />
+        <CardMedia component="img" height="200" alt={title} src={projectImgUrl}/>
         <CardContent sx={{ height: 120 }}>
           <Typography
             gutterBottom
@@ -112,6 +114,7 @@ export default function ActionAreaCardList() {
                         projectId={card?.ProjectId}
                         title={card?.Title}
                         members={card?.Members}
+                        projectImgUrl={card?.ProjectImgUrl}
                       />
                     </Grid>
                   ))

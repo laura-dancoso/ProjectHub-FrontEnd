@@ -10,7 +10,8 @@ export interface ProjectDetail{
     SubjectName: string,
     ProfessorName: string,
     Members: string[],
-    ProjectUrl: string
+    ProjectUrl: string,
+    ProjectImgUrls: string[]
 }
 
 export interface Link{

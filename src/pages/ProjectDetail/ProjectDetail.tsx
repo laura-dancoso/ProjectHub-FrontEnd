@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { Carousel } from "antd";
+import { Carousel } from "antd";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { ProjectDetail as ProjectDetailModel } from "../../models/projectDetail.model";
@@ -113,8 +113,8 @@ const ProjectDetail = () => {
                   marginBottom: 2,
                 }}
               >
-                {/* <Carousel autoplay>
-                  {coverImages.map((image, index) => (
+                <Carousel autoplay>
+                  {project?.ProjectImgUrls.map((image, index) => (
                     <img
                       key={index}
                       src={image}
@@ -122,7 +122,7 @@ const ProjectDetail = () => {
                       style={{ maxWidth: "100%" }}
                     />
                   ))}
-                </Carousel> */}
+                </Carousel>
               </Box>
             </Box>
   
