@@ -10,16 +10,18 @@ import {
   Grid,
   List,
   ListItem,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Carousel } from "antd";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { ProjectDetail as ProjectDetailModel } from "../../models/projectDetail.model";
 import { getProjectById } from "../../services/project-hub.service";
 import { getLocaleDate } from "../../services/utils.service";
+import { darkTheme } from "../../App";
+import "./ProjectDetail.style.css";
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -28,17 +30,14 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     const getData = async () => {
-
       if (!!projectId) {
-
         setLoading(true);
         const projectDetail = await getProjectById(parseInt(projectId) ?? 0);
         setProject(projectDetail);
         setLoading(false);
       }
-    }
+    };
     getData();
-
   }, []);
 
   const navigate = useNavigate();
@@ -49,44 +48,25 @@ const ProjectDetail = () => {
 
   return (
     <div>
-      <Container
-        maxWidth="lg"
-        sx={{ marginTop: "35px", backgroundColor: "#212121" }}
-      >
+      <Container maxWidth="lg" sx={{ marginTop: "35px" }}>
         <Box>
           <Tooltip title="Volver">
-            <IconButton
-              onClick={handleGoBack}
-              rel="noopener noreferrer"
-            >
+            <IconButton onClick={handleGoBack} rel="noopener noreferrer">
               <ArrowBackIcon sx={{ fontSize: "30px" }} />
             </IconButton>
           </Tooltip>
         </Box>
-        {
-          loading ?
-          (<Box 
+        {loading ? (
+          <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
             padding={3}
-            >
+          >
             <CircularProgress color="inherit" />
-            </Box>) :
-          (<Box marginBottom={1} padding={2}>
-            <Typography
-              variant="body2"
-              gutterBottom
-              style={{
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "flex-end",
-                fontSize: "18px",
-                color: "primary.light",
-              }}
-            >
-              {getLocaleDate(project?.CreationDate)}
-            </Typography>
+          </Box>
+        ) : (
+          <Box marginBottom={1} padding={2}>
             <Box
               sx={{
                 borderRadius: 2,
@@ -94,6 +74,19 @@ const ProjectDetail = () => {
                 padding: 2,
               }}
             >
+              <Typography
+                variant="body2"
+                gutterBottom
+                style={{
+                  marginBottom: "10px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  fontSize: "18px",
+                  color: "#fff",
+                }}
+              >
+                {getLocaleDate(project?.CreationDate)}
+              </Typography>
               <Typography
                 variant="h2"
                 gutterBottom
@@ -105,7 +98,7 @@ const ProjectDetail = () => {
               <Typography variant="body1" gutterBottom>
                 {project?.Description}
               </Typography>
-  
+
               {/* PORTADA */}
               <Box
                 sx={{
@@ -119,13 +112,13 @@ const ProjectDetail = () => {
                       key={index}
                       src={image}
                       alt={`Portada ${index}`}
-                      style={{ maxWidth: "100%" }}
+                      className="carousel-image"
                     />
                   ))}
                 </Carousel>
               </Box>
             </Box>
-  
+
             {/* MEMBERS */}
             <Box
               sx={{
@@ -142,7 +135,7 @@ const ProjectDetail = () => {
                   marginRight: 1,
                   marginBottom: 2,
                   fontWeight: "bold",
-                  color: "#9c27b0",
+                  color: darkTheme.palette.primary.light,
                 }}
               >
                 Integrantes
@@ -155,10 +148,8 @@ const ProjectDetail = () => {
                 />
               ))}
             </Box>
-            {/* DETALLE ACADEMICO: -CARRERA-MATERIA - PROFESOR */}
-            <Grid
-              container
-              spacing={0}
+            {/* DOCENTE*/}
+            <Box
               sx={{
                 borderRadius: 2,
                 bgcolor: "#353535",
@@ -166,27 +157,24 @@ const ProjectDetail = () => {
                 padding: 2,
               }}
             >
-              <Grid item>
-                <Box marginBottom={1}>
-                  <Typography
-                    variant="h5"
-                    component="h2"
-                    sx={{
-                      marginRight: 1,
-                      marginBottom: 2,
-                      fontWeight: "bold",
-                      color: "#9c27b0",
-                    }}
-                  >
-                    Carrera
-                  </Typography>
-                  <Chip label={project?.DegreeName} style={{ fontSize: 15 }} />
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              spacing={0}
+              <Typography
+                variant="h5"
+                component="h2"
+                sx={{
+                  marginRight: 1,
+                  marginBottom: 2,
+                  fontWeight: "bold",
+                  color: darkTheme.palette.primary.light,
+                }}
+              >
+                Docente
+              </Typography>
+              <Chip label={project?.ProfessorName} style={{ fontSize: 15 }} />
+            </Box>
+            {/* DETALLE ACADEMICO:*/}
+
+            {/* MATERIA*/}
+            <Box
               sx={{
                 borderRadius: 2,
                 bgcolor: "#353535",
@@ -194,27 +182,23 @@ const ProjectDetail = () => {
                 padding: 2,
               }}
             >
-              <Grid item>
-                <Box marginBottom={2} textAlign="left">
-                  <Typography
-                    variant="h5"
-                    component="h2"
-                    sx={{
-                      marginRight: 1,
-                      marginBottom: 2,
-                      fontWeight: "bold",
-                      color: "#9c27b0",
-                    }}
-                  >
-                    Materia
-                  </Typography>
-                  <Chip label={project?.SubjectName} style={{ fontSize: 15 }} />
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              spacing={0}
+              <Typography
+                variant="h5"
+                component="h2"
+                sx={{
+                  marginRight: 1,
+                  marginBottom: 2,
+                  fontWeight: "bold",
+                  color: darkTheme.palette.primary.light,
+                }}
+              >
+                Materia
+              </Typography>
+              <Chip label={project?.SubjectName} style={{ fontSize: 15 }} />
+            </Box>
+
+            {/* CARRERA*/}
+            <Box
               sx={{
                 borderRadius: 2,
                 bgcolor: "#353535",
@@ -222,24 +206,21 @@ const ProjectDetail = () => {
                 padding: 2,
               }}
             >
-              <Grid item>
-                <Box marginBottom={2} textAlign="left">
-                  <Typography
-                    variant="h5"
-                    component="h2"
-                    sx={{
-                      marginRight: 1,
-                      marginBottom: 2,
-                      fontWeight: "bold",
-                      color: "#9c27b0",
-                    }}
-                  >
-                    Profesor
-                  </Typography>
-                  <Chip label={project?.ProfessorName} style={{ fontSize: 15 }} />
-                </Box>
-              </Grid>
-            </Grid>
+              <Typography
+                variant="h5"
+                component="h2"
+                sx={{
+                  marginRight: 1,
+                  marginBottom: 2,
+                  fontWeight: "bold",
+                  color: darkTheme.palette.primary.light,
+                }}
+              >
+                Carrera
+              </Typography>
+              <Chip label={project?.DegreeName} style={{ fontSize: 15 }} />
+            </Box>
+
             {/* TECNOLOGIAS UTILIZADAS -link a repo-link a app */}
             <Box
               sx={{
@@ -256,7 +237,7 @@ const ProjectDetail = () => {
                   marginRight: 1,
                   marginBottom: 2,
                   fontWeight: "bold",
-                  color: "#9c27b0",
+                  color: darkTheme.palette.primary.light,
                 }}
               >
                 Tecnologías utilizadas
@@ -288,13 +269,13 @@ const ProjectDetail = () => {
                 <Typography
                   variant="h5"
                   component="h2"
-                  sx={{ marginRight: 1, fontWeight: "bold", color: "#9c27b0" }}
+                  sx={{ marginRight: 1, fontWeight: "bold", color: darkTheme.palette.primary.light }}
                 >
                   Repositorio
                 </Typography>
                 <Tooltip title="Ver Repositorio">
                   <IconButton
-                    href={project?.RepoUrl ?? ''}
+                    href={project?.RepoUrl ?? ""}
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{ padding: 3, width: "40px", height: "40px" }}
@@ -303,7 +284,7 @@ const ProjectDetail = () => {
                   </IconButton>
                 </Tooltip>
               </Box>
-  
+
               <Box
                 sx={{
                   display: "flex",
@@ -314,13 +295,13 @@ const ProjectDetail = () => {
                 <Typography
                   variant="h5"
                   component="h2"
-                  sx={{ marginRight: 1, fontWeight: "bold", color: "#9c27b0" }}
+                  sx={{ marginRight: 1, fontWeight: "bold", color: darkTheme.palette.primary.light }}
                 >
                   Proyecto
                 </Typography>
                 <Tooltip title="Ver proyecto">
                   <IconButton
-                    href={project?.ProjectUrl ?? ''}
+                    href={project?.ProjectUrl ?? ""}
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{ padding: 3, width: "40px", height: "40px" }}
@@ -345,14 +326,13 @@ const ProjectDetail = () => {
                 <Typography
                   variant="h5"
                   gutterBottom
-                  sx={{ fontWeight: "bold", color: "#9c27b0" }}
+                  sx={{ fontWeight: "bold", color: darkTheme.palette.primary.light }}
                 >
                   {" "}
                   Links
                 </Typography>
                 <List sx={{ padding: 0 }}>
                   {project?.OtherLinks?.map(({ Name, Url }, index) => (
-  
                     <ListItem key={index} sx={{ paddingBottom: 1 }}>
                       <Typography
                         variant="body2"
@@ -375,8 +355,8 @@ const ProjectDetail = () => {
                 </List>
               </Grid>
             </Grid>
-          </Box>)
-        }
+          </Box>
+        )}
       </Container>
     </div>
   );

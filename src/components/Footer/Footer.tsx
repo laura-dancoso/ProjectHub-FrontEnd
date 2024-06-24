@@ -1,11 +1,12 @@
 
 import Typography from '@mui/material/Typography';
+import { darkTheme } from '../../App';
 
 const Footer = () => {
   return (
-    <footer style={{ textAlign: 'center', marginTop: '35px', width: '100%', padding: '20px', background:"#212121"}}>
-      <Typography variant="body2" color="textSecondary" fontWeight= "bold" >
-        {new Date().getFullYear()} IFTS11-ProjectHub
+    <footer style={{ textAlign: 'center', marginTop: '35px', width: '100%', padding: '20px', background: darkTheme.palette.primary.main}}>
+      <Typography variant="body2" color="#fff" fontWeight= "bold" >
+      Zavaleta 204 - Parque Patricios
       </Typography>
     </footer>
   );
