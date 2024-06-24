@@ -5,15 +5,16 @@ import Footer from "./components/Footer/Footer";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/Login";
 
 
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      light: "#ba68c8",
-      main: "#9c27b0",
-      dark: "#6d1b7b",
+      light: "#009688",
+      main: "#00897b",
+      dark: "#00796b",
       contrastText: "#fff",
     },
   },
@@ -27,6 +28,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
+        </Routes>
+        <Routes>
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Routes>
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
