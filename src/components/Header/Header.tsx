@@ -1,8 +1,9 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, Tooltip } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import {LoginIcon, LogoutIcon, ProjectHubIcon} from "../Icons/Icons";
+import {LoginIcon, LogoutIcon} from "../Icons/Icons";
 import { darkTheme } from "../../App";
+import logo from "../../assets/ifts11-logo-login.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,20 +18,18 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <div
+      <img
+          src={logo}
+          alt="IFT11 Logo"
           style={{
             width: "36px",
             height: "36px",
-            borderRadius: "50%",
-            border: "2px solid #fff",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             marginRight: "5px"
           }}
-        >
-          <ProjectHubIcon style={{ color: "#fff" }} />
-        </div>
+        />
         <Typography
           variant="h6"
           component="div"
