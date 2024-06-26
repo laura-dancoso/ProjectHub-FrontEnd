@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, TextField, Button, Box, Typography } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import logo from "../../assets/ifts11-logo-login.png";
+import logo from "../../assets/ifts11-logo.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");

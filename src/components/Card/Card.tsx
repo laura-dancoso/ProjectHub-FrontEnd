@@ -199,7 +199,7 @@ export default function ActionAreaCardList() {
       sx={{
         flexGrow: 1,
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: loading ? `center` : `space-between`,
         padding: 2,
       }}
     >

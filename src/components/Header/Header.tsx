@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Tooltip } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 import {LoginIcon, LogoutIcon} from "../Icons/Icons";
 import { darkTheme } from "../../App";
-import logo from "../../assets/ifts11-logo-login.png";
+import logo from "../../assets/ifts11-logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
