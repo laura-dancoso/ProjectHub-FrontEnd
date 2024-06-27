@@ -14,42 +14,53 @@ interface ResponsiveDialogProps {
   onClose: () => void;
   onConfirm: () => void;
   actionType: 'edit' | 'delete' | 'save';
+  loading?: boolean
 }
 
-const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({ open, onClose, onConfirm, actionType }) => {
+const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
+  open,
+  onClose,
+  onConfirm,
+  actionType,
+  loading = false
+}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const getDialogContent = () => {
-    switch(actionType) {
+    switch (actionType) {
       case 'edit':
         return {
           title: "Editar proyecto",
           content: "Estás a punto de modificar el proyecto. ¿Quieres continuar?",
-          confirmText: "Guardar",
+          confirmText: "Modificar",
+          loadingText: "Modificando..."
         };
       case 'delete':
         return {
           title: "Eliminar proyecto",
           content: "Estás a punto de eliminar el proyecto. ¿Quieres continuar?",
           confirmText: "Eliminar",
+          loadingText: "Eliminando..."
         };
       case 'save':
         return {
           title: "Guardar proyecto",
           content: "Estás a punto de crear un nuevo proyecto. ¿Quieres continuar?",
           confirmText: "Guardar",
+          loadingText: "Guardando..."
         };
       default:
         return {
           title: "",
           content: "",
           confirmText: "",
+          loadingText: ''
         };
     }
   };
 
-  const { title, content, confirmText } = getDialogContent();
+  const { title, content, confirmText, loadingText } = getDialogContent();
 
   return (
     <Dialog
@@ -58,7 +69,7 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({ open, onClose, onCo
       onClose={onClose}
       aria-labelledby="dialog-title"
     >
-      <DialogTitle id="dialog-title" style = {{ color: darkTheme.palette.primary.light }}>
+      <DialogTitle id="dialog-title" style={{ color: darkTheme.palette.primary.light }}>
         {title}
       </DialogTitle>
       <DialogContent>
@@ -67,11 +78,11 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({ open, onClose, onCo
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={onClose}>
+        <Button variant="outlined" onClick={onClose} disabled={loading}>
           Cancelar
         </Button>
-        <Button variant="contained" onClick={onConfirm} >
-          {confirmText}
+        <Button variant="contained" onClick={onConfirm} disabled={loading} >
+          {loading? loadingText : confirmText}
         </Button>
       </DialogActions>
     </Dialog>

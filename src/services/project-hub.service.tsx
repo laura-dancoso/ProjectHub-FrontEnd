@@ -32,3 +32,15 @@ export const getProjectById = async (id: number) => {
     return null;
   }
 };
+
+
+export const deleteProjectById = async (id: number) => {
+  try {
+    const endpoint = `${API_URL}${PROJECTS_ENDPOINT}/${id}`;
+    await axios.delete(endpoint);
+    return true;
+  } catch (error) {
+    console.error('Error:', error);
+    return false;
+  }
+};
