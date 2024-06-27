@@ -312,49 +312,54 @@ const ProjectDetail = () => {
               </Box>
             </Box>
             {/* LINKS */}
-            <Grid
-              container
-              spacing={0}
-              sx={{
-                borderRadius: 2,
-                bgcolor: "#353535",
-                marginTop: "10px",
-                padding: 2,
-              }}
-            >
-              <Grid item xs={12}>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  sx={{ fontWeight: "bold", color: darkTheme.palette.primary.light }}
+            {
+              ((project?.OtherLinks?.length || 0) > 0) && (
+                <Grid
+                  container
+                  spacing={0}
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: "#353535",
+                    marginTop: "10px",
+                    padding: 2,
+                  }}
                 >
-                  {" "}
-                  Links
-                </Typography>
-                <List sx={{ padding: 0 }}>
-                  {project?.OtherLinks?.map(({ Name, Url }, index) => (
-                    <ListItem key={index} sx={{ paddingBottom: 1 }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ marginRight: 1, fontSize: "18px" }}
-                      >
-                        {Name}
-                      </Typography>
-                      <Tooltip title="Abrir enlace">
-                        <IconButton
-                          href={Url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{ padding: 1 }}
-                        >
-                          <OpenInNewIcon sx={{ fontSize: "20px" }} />
-                        </IconButton>
-                      </Tooltip>
-                    </ListItem>
-                  ))}
-                </List>
-              </Grid>
-            </Grid>
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      sx={{ fontWeight: "bold", color: darkTheme.palette.primary.light }}
+                    >
+                      {" "}
+                      Links
+                    </Typography>
+                    <List sx={{ padding: 0 }}>
+                      {project?.OtherLinks?.map(({ Name, Url }, index) => (
+                        <ListItem key={index} sx={{ paddingBottom: 1 }}>
+                          <Typography
+                            variant="body2"
+                            sx={{ marginRight: 1, fontSize: "18px" }}
+                          >
+                            {Name}
+                          </Typography>
+                          <Tooltip title="Abrir enlace">
+                            <IconButton
+                              href={Url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              sx={{ padding: 1 }}
+                            >
+                              <OpenInNewIcon sx={{ fontSize: "20px" }} />
+                            </IconButton>
+                          </Tooltip>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Grid>
+                </Grid>
+              )
+            }
+
           </Box>
         )}
       </Container>
