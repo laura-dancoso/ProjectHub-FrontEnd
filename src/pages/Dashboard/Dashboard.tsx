@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
-import ActionAreaCardList from "../../components/Card/Card";
+import CardList from "../../components/Card/Card";
 import { useAuth } from "../../context/AuthContext";
 import Banner from "../../components/Banner/Banner";
-import AddProjectButton from "../../components/Button/AddProjectButton";
+import AddProject from "../../components/AddProject/AddProject";
 
 const Dashboard = () => {
 
@@ -11,8 +11,8 @@ const Dashboard = () => {
   return (
     <Container maxWidth="lg" sx={{ marginTop: "35px" }}>
       <Banner></Banner>
-       {isAuthenticated && <AddProjectButton />}
-      <ActionAreaCardList></ActionAreaCardList>
+       {isAuthenticated && <AddProject />}
+      <CardList></CardList>
     </Container>
   );
 };

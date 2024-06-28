@@ -5,8 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Chip } from "@mui/material";
-import { useEffect, useState } from "react";
-import { getProjects } from "../../services/project-hub.service";
+import { FC, useEffect, useState } from "react";
+import { deleteProjectById, getProjects } from "../../services/projects.service";
 import { useNavigate } from "react-router";
 import { Project } from "../../models/project.model";
 import { darkTheme } from "../../App";
@@ -16,32 +16,36 @@ import EditProject from "./EditProject";
 import ResponsiveDialog from "../Modal/Modal";
 import "./Card.styles.css"
 
-
-let cardData: Project[] = [];
-
-const ActionAreaCard = ({
-  projectId,
-  projectImgUrl,
-  title,
-  members,
-  isAuthenticated,
-}: {
+interface CardProps
+{
   projectId: number;
   projectImgUrl: string;
   title: string;
   members: string[];
   isAuthenticated: boolean;
+  onProjectsReload: () => void
+}
+
+
+const ActionAreaCard: FC<CardProps>= ({
+  projectId,
+  projectImgUrl,
+  title,
+  members,
+  isAuthenticated,
+  onProjectsReload
 }) => {
   const navigate = useNavigate();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [dialogLoading, setDialogLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
-
-
+  
+  
   const handleGoToProjectDetail = () => {
     navigate(`/projects/${projectId}`);
   };
-
+  
   const handleEditDialogOpen = () => {
     setSelectedProject({
       projectId,
@@ -61,32 +65,38 @@ const ActionAreaCard = ({
   const handleEditDialogClose = () => {
     setEditDialogOpen(false);
   };
-
+  
   const handleDeleteDialogOpen = () => {
     setDeleteDialogOpen(true);
   };
 
-  const handleDeleteDialogClose = () => {
+  const handleDeleteDialogClose = () => {    
+    setDialogLoading(false);
     setDeleteDialogOpen(false);
   };
-
-  const handleSaveProject = (updatedProject: any) => {
-    console.log("Proyecto actualizado: ", updatedProject);
+  
+  const handleSaveProject = (_updatedProject: any) => {
     handleEditDialogClose();
   };
-
-  const handleDeleteProject = () => {
-    //Lógica para eliminar proyecto ...
+  
+  const handleDeleteProject = async () => {
+    setDialogLoading(true);
+    const responseOk = await deleteProjectById(projectId);
+    if(responseOk ){
+      onProjectsReload();
+    }else{
+      // TODO: AGREGAR ALERT
+    }
     handleDeleteDialogClose();
   };
-
-
+  
+  
   return (
     <>
       <Card
         sx={{ maxWidth: 345, marginTop: 2, position: "relative" }}
         onClick={handleGoToProjectDetail}
-      >
+        >
         <CardActionArea>
           <CardMedia
             component="img"
@@ -111,8 +121,8 @@ const ActionAreaCard = ({
             <Box>
               {members?.map((member, index) => (
                 <Chip
-                  key={index}
-                  label={member}
+                key={index}
+                label={member}
                   style={{
                     marginRight: "10px",
                     marginBottom: "10px",
@@ -123,8 +133,8 @@ const ActionAreaCard = ({
             </Box>
             {isAuthenticated && (
               <Box
-                sx={{
-                  position: "absolute",
+              sx={{
+                position: "absolute",
                   bottom: 0,
                   right: 0,
                   margin: 1,
@@ -172,26 +182,28 @@ const ActionAreaCard = ({
         onClose={handleDeleteDialogClose}
         onConfirm={handleDeleteProject}
         actionType="delete"
-      />
+        loading={dialogLoading}
+        />
     </>
   );
 };
 
-
-export default function ActionAreaCardList() {
+export default function CardList() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth();
+  let cardData: Project[] = [];
 
-  useEffect(() => {
-    const getData = async () => {
+  const getData = async (reload = false) => {
+    if(!reload)
       setLoading(true);
-      cardData = await getProjects() ?? [];
-      setProjects([...cardData]);
-      setLoading(false);
-    }
+    cardData = await getProjects() ?? [];
+    setProjects([...cardData]);
+    setLoading(false);
+  }
+  
+  useEffect(() => {
     getData();
-
   }, []);
 
   return (
@@ -207,11 +219,11 @@ export default function ActionAreaCardList() {
         loading ?
           (<CircularProgress color="inherit" />) :
           (
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} justifyContent={(projects?.length == 0) ? 'left' : 'center'}>
               {
                 (projects?.length == 0) ?
                   (
-                    <Button variant="outlined" href="/" >No se encontraron projectos, recargue nuevamente la página</Button>
+                    <Button style={{margin:"15px"}} variant="outlined" href="/" >No se encontraron projectos, recargue nuevamente la página</Button>
                   )
                   :
                   (projects?.map((card, index) => (
@@ -222,6 +234,7 @@ export default function ActionAreaCardList() {
                         members={card?.Members}
                         projectImgUrl={card?.ProjectImgUrl}
                         isAuthenticated={isAuthenticated}
+                        onProjectsReload={() => getData()}
                       />
                     </Grid>
                   ))
