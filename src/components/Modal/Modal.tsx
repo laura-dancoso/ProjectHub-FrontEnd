@@ -62,7 +62,7 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
 
   const { title, content, confirmText, loadingText } = getDialogContent();
 
-  const onCloseDialog: DialogProps["onClose"] = (event, reason) => {
+  const onCloseDialog: DialogProps["onClose"] = (_event, reason) => {
     if (reason && reason === "backdropClick")
         return;
     onClose();

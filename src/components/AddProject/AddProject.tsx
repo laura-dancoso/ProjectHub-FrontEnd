@@ -82,7 +82,7 @@ const ImageUploader: React.FC<{
 }> = ({ onFilesUploaded, buttonTooltip, buttonText, setSelectedImages, selectedImages }) => {
 
   const handleDelete = (index: number) => {
-    let updatedImages = selectedImages.filter((img, i) => index != i);
+    let updatedImages = selectedImages.filter((_img, i) => index != i);
     setSelectedImages(updatedImages);
   };
 
@@ -173,7 +173,7 @@ export default function AddProject() {
       repoUrl: '',
       projectUrl: '',
     },
-    onSubmit: (values) => {
+    onSubmit: (_values) => {
       formik.setFieldValue('members', members.join(';'));
       formik.setFieldValue('technologies', technologies);
       formik.setFieldValue('creationDate', creationDateValue?.toDate());
@@ -199,7 +199,7 @@ export default function AddProject() {
     setOpen(true);
   };
 
-  const handleCloseForm: DialogProps["onClose"] = (event, reason) => {
+  const handleCloseForm: DialogProps["onClose"] = (_event, reason) => {
     if (reason && reason === "backdropClick")
       return;
     handleClose();

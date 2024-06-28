@@ -75,7 +75,7 @@ const ActionAreaCard: FC<CardProps>= ({
     setDeleteDialogOpen(false);
   };
   
-  const handleSaveProject = (updatedProject: any) => {
+  const handleSaveProject = (_updatedProject: any) => {
     handleEditDialogClose();
   };
   
