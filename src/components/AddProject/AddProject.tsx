@@ -230,7 +230,6 @@ export default function AddProject() {
       degreeId: degree,
       subjectId: subject
     };
-    console.log(values)
     setDialogLoading(true);
     const projectId = await createNewProject(values, selectedImages.map(s => s.file));
     if (projectId) {
@@ -445,8 +444,8 @@ export default function AddProject() {
           
              */}
           <ImageUploader
-            buttonText="Cargar fotos"
-            buttonTooltip="La primer foto será para la portada"
+            buttonText="Cargar imágenes"
+            buttonTooltip="La primer imagen será para la portada"
             onFilesUploaded={(files) => {
               setSelectedImages(files)
             }}
