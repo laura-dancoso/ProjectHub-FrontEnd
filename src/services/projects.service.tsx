@@ -44,3 +44,39 @@ export const deleteProjectById = async (id: number) => {
     return false;
   }
 };
+
+export interface ProjectRequest {
+  title: string,
+  description: string
+  creationDate: any,
+  members: string,
+  technologies: string[]
+  professorName: string,
+  repoUrl: string,
+  projectUrl: string,
+  subjectId?: number,
+  degreeId?: number,
+  // TODO: links
+}
+export const createNewProject = async (data: ProjectRequest, files: any) => {
+  const formData = new FormData();
+
+  try {
+    for (let index = 0; index < files?.length; index++) {
+      formData.append(index==0 ? "project" : "covers", files[index]);
+    }
+    Object.entries(data).forEach(([key, value]) => {
+      if(key=="technologies"){
+        formData.append(key, value.join(";"));
+      } else{
+        formData.append(key, value);
+      }
+    });
+    const endpoint = `${API_URL}${PROJECTS_ENDPOINT}`;
+    const result = await axios.post(endpoint, formData);
+    return result.data?.id;
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+}

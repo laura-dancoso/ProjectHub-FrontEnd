@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -62,11 +62,16 @@ const ResponsiveDialog: React.FC<ResponsiveDialogProps> = ({
 
   const { title, content, confirmText, loadingText } = getDialogContent();
 
+  const onCloseDialog: DialogProps["onClose"] = (event, reason) => {
+    if (reason && reason === "backdropClick")
+        return;
+    onClose();
+  }
   return (
     <Dialog
       fullScreen={fullScreen}
       open={open}
-      onClose={onClose}
+      onClose={onCloseDialog}
       aria-labelledby="dialog-title"
     >
       <DialogTitle id="dialog-title" style={{ color: darkTheme.palette.primary.light }}>

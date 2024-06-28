@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Chip } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { deleteProjectById, getProjects } from "../../services/project-hub.service";
+import { deleteProjectById, getProjects } from "../../services/projects.service";
 import { useNavigate } from "react-router";
 import { Project } from "../../models/project.model";
 import { darkTheme } from "../../App";
@@ -219,11 +219,11 @@ export default function CardList() {
         loading ?
           (<CircularProgress color="inherit" />) :
           (
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} justifyContent={(projects?.length == 0) ? 'left' : 'center'}>
               {
                 (projects?.length == 0) ?
                   (
-                    <Button variant="outlined" href="/" >No se encontraron projectos, recargue nuevamente la página</Button>
+                    <Button style={{margin:"15px"}} variant="outlined" href="/" >No se encontraron projectos, recargue nuevamente la página</Button>
                   )
                   :
                   (projects?.map((card, index) => (
@@ -234,7 +234,7 @@ export default function CardList() {
                         members={card?.Members}
                         projectImgUrl={card?.ProjectImgUrl}
                         isAuthenticated={isAuthenticated}
-                        onProjectsReload={() => getData(true)}
+                        onProjectsReload={() => getData()}
                       />
                     </Grid>
                   ))

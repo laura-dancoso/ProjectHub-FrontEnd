@@ -18,7 +18,7 @@ import { Carousel } from "antd";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { ProjectDetail as ProjectDetailModel } from "../../models/projectDetail.model";
-import { getProjectById } from "../../services/project-hub.service";
+import { getProjectById } from "../../services/projects.service";
 import { getLocaleDate } from "../../services/utils.service";
 import { darkTheme } from "../../App";
 import "./ProjectDetail.style.css";
@@ -85,6 +85,7 @@ const ProjectDetail = () => {
                   color: "#fff",
                 }}
               >
+                Fecha de creación:
                 {getLocaleDate(project?.CreationDate)}
               </Typography>
               <Typography
